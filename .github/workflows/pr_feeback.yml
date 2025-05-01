@@ -30,3 +30,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PAT_GITHUB }}
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: python generate_feedback.py
+        
