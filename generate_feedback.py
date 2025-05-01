@@ -42,10 +42,10 @@ def comentar_no_pr(mensagem):
 
 def chamar_llm(prompt):
     client = InferenceClient(
-        model="google/flan-t5-large",
+        model_id="google/flan-t5-large",
         token=os.environ["HF_TOKEN"]
     )
-    response = client.text_generation(prompt, max_new_tokens=250)
+    response = client.text_to_text(prompt)
     return response
 
 def main():

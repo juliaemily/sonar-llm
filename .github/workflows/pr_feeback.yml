@@ -27,6 +27,6 @@ jobs:
 
       - name: Run feedback script
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_GITHUB }}
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: python generate_feedback.py
