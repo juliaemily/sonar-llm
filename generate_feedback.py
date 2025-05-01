@@ -4,7 +4,7 @@ import requests  # Adicionando a importação do requests
 from github import Github
 from huggingface_hub import InferenceClient
 
-# Simulando alertas do Sonar
+# Simulando alertas do Sonar para PR
 sonar_alerts = [
     {
         "file": "src/app.js",

@@ -1,3 +1,3 @@
 <?php
 $input = $_GET['x'];
-eval($input); // alerta clássico de vulnerabilidade
+eval($input); // alerta clássico de vulnerabilidade do arquivo
