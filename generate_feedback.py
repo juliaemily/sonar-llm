@@ -41,7 +41,7 @@ def comentar_no_pr(mensagem):
 def chamar_llm(prompt):
     # Cliente da Hugging Face usando o modelo LLaMA 3
     client = InferenceClient(
-        repo_id="huggingface/llama-3",  # Substitua pelo ID correto do modelo LLaMA 3
+        repo_id="nvidia/Llama-3_1-Nemotron-Ultra-253B-v1",  # Substitua pelo ID correto do modelo LLaMA 3
         token=os.environ["HF_TOKEN"]
     )
     # Chama o modelo para gerar a resposta
