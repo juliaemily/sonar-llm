@@ -1,0 +1,8 @@
+[
+  {
+    "file": "src/index.php",
+    "line": 12,
+    "message": "Avoid using eval",
+    "code": "eval($input);"
+  }
+]
