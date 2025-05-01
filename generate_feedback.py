@@ -40,7 +40,7 @@ def comentar_no_pr(mensagem):
 
 def chamar_llm(prompt):
     client = InferenceClient(
-        model="nvidia/Llama-3_1-Nemotron-Ultra-253B-v1",
+        model="mistralai/Mistral-7B-Instruct-v0.1",
         token=os.environ["HF_TOKEN"]
     )
     response = client.text_generation(prompt, max_new_tokens=512)
