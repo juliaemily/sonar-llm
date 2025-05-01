@@ -40,7 +40,7 @@ def comentar_no_pr(mensagem):
 
 def chamar_llm(prompt):
     client = InferenceClient(
-        model="mistralai/Mistral-7B-Instruct-v0.1",
+        model="facebook/opt-2.7b",
         token=os.environ["HF_TOKEN"]
     )
     response = client.text_generation(prompt, max_new_tokens=512)
