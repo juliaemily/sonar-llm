@@ -1,10 +1,10 @@
 import os
 import json
-import requests  # Adicionando a importação do requests
+import requests  
 from github import Github
 from huggingface_hub import InferenceClient
 
-# Simulando alertas do Sonar para PR
+# Simulando alertas do Sonar para novo PR
 sonar_alerts = [
     {
         "file": "src/app.js",
@@ -31,7 +31,9 @@ Explique tecnicamente o alerta e sugira como melhorar esse trecho de forma segur
 """
 
 def comentar_no_pr(mensagem):
-    pr_number = os.environ.get("GITHUB_REF").split("/")[-1]
+    with open(os.environ["GITHUB_EVENT_PATH"]) as f:
+        event = json.load(f)
+    pr_number = event["pull_request"]["number"]    
     repo_name = os.environ.get("GITHUB_REPOSITORY")
     g = Github(os.environ["GITHUB_TOKEN"])
     repo = g.get_repo(repo_name)
@@ -40,10 +42,10 @@ def comentar_no_pr(mensagem):
 
 def chamar_llm(prompt):
     client = InferenceClient(
-        model="google/flan-t5-large",
+        model_id="google/flan-t5-large",
         token=os.environ["HF_TOKEN"]
     )
-    response = client.text_generation(prompt, max_new_tokens=250)
+    response = client.text_to_text(prompt)
     return response
 
 def main():
