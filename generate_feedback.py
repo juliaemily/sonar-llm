@@ -41,12 +41,10 @@ def comentar_no_pr(mensagem):
     pr.create_issue_comment(mensagem)
 
 def chamar_llm(prompt):
-    client = InferenceClient(
-        model_id="google/flan-t5-large",
-        token=os.environ["HF_TOKEN"]
-    )
-    response = client.text_to_text(prompt)
+    client = InferenceClient(token=os.environ["HF_TOKEN"])  # sem model_id aqui
+    response = client.text_generation(model="google/flan-t5-large", prompt=prompt, max_new_tokens=250)
     return response
+
 
 def main():
     for alerta in sonar_alerts:
