@@ -39,14 +39,12 @@ def comentar_no_pr(mensagem):
     pr.create_issue_comment(mensagem)
 
 def chamar_llm(prompt):
-    # Cliente da Hugging Face usando o modelo LLaMA 3
     client = InferenceClient(
-        repo_id="nvidia/Llama-3_1-Nemotron-Ultra-253B-v1",  # Substitua pelo ID correto do modelo LLaMA 3
+        model="nvidia/Llama-3_1-Nemotron-Ultra-253B-v1",
         token=os.environ["HF_TOKEN"]
     )
-    # Chama o modelo para gerar a resposta
-    response = client.query(prompt)
-    return response['generated_text']
+    response = client.text_generation(prompt, max_new_tokens=512)
+    return response
 
 def main():
     for alerta in sonar_alerts:
