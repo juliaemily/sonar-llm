@@ -1,9 +1,8 @@
 import os
-import json
 from github import Github
-from openai import OpenAI
+from huggingface_hub import InferenceClient
 
-# Simulando alertas do Sonar
+# Simulação de alertas do Sonar
 sonar_alerts = [
     {
         "file": "src/app.js",
@@ -24,6 +23,7 @@ Alerta do Sonar:
 Código:
 ```javascript
 {alerta['code']}
+
 ```
 
 Explique tecnicamente o alerta e sugira como melhorar esse trecho de forma segura e moderna.
@@ -38,14 +38,17 @@ def comentar_no_pr(mensagem):
     pr.create_issue_comment(mensagem)
 
 def chamar_llm(prompt):
-    client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
-    response = client.chat.completions.create(
-        model="gpt-4",
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
-    )
-    return response.choices[0].message.content
+    api_url = "https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8B-Instruct"
+    headers = {
+        "Authorization": f"Bearer {os.environ['HF_TOKEN']}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "inputs": prompt,
+        "parameters": {"max_new_tokens": 300}
+    }
+    response = requests.post(api_url, headers=headers, data=json.dumps(payload))
+    return response.json()
 
 def main():
     for alerta in sonar_alerts:
