@@ -43,7 +43,7 @@ def chamar_llm(prompt):
         model="google/flan-t5-large",
         token=os.environ["HF_TOKEN"]
     )
-    response = client.text_generation(prompt, max_new_tokens=512)
+    response = client.text_generation(prompt, max_new_tokens=250)
     return response
 
 def main():
