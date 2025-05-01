@@ -31,7 +31,9 @@ Explique tecnicamente o alerta e sugira como melhorar esse trecho de forma segur
 """
 
 def comentar_no_pr(mensagem):
-    pr_number = os.environ.get("GITHUB_REF").split("/")[-1]
+    with open(os.environ["GITHUB_EVENT_PATH"]) as f:
+        event = json.load(f)
+    pr_number = event["pull_request"]["number"]    
     repo_name = os.environ.get("GITHUB_REPOSITORY")
     g = Github(os.environ["GITHUB_TOKEN"])
     repo = g.get_repo(repo_name)
