@@ -40,7 +40,7 @@ def comentar_no_pr(mensagem):
 def chamar_llm(prompt):
     client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
     response = client.chat.completions.create(
-        model="gpt-4",
+        model="gpt-3.5-turbo",  # Modelo gratuito
         messages=[
             {"role": "user", "content": prompt}
         ]
