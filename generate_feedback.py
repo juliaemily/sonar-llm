@@ -1,8 +1,10 @@
 import os
+import json
+import requests  # Adicionando a importação do requests
 from github import Github
 from huggingface_hub import InferenceClient
 
-# Simulação de alertas do Sonar
+# Simulando alertas do Sonar
 sonar_alerts = [
     {
         "file": "src/app.js",
@@ -23,7 +25,6 @@ Alerta do Sonar:
 Código:
 ```javascript
 {alerta['code']}
-
 ```
 
 Explique tecnicamente o alerta e sugira como melhorar esse trecho de forma segura e moderna.
@@ -38,17 +39,14 @@ def comentar_no_pr(mensagem):
     pr.create_issue_comment(mensagem)
 
 def chamar_llm(prompt):
-    api_url = "https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8B-Instruct"
-    headers = {
-        "Authorization": f"Bearer {os.environ['HF_TOKEN']}",
-        "Content-Type": "application/json"
-    }
-    payload = {
-        "inputs": prompt,
-        "parameters": {"max_new_tokens": 300}
-    }
-    response = requests.post(api_url, headers=headers, data=json.dumps(payload))
-    return response.json()
+    # Cliente da Hugging Face usando o modelo LLaMA 3
+    client = InferenceClient(
+        repo_id="huggingface/llama-3",  # Substitua pelo ID correto do modelo LLaMA 3
+        token=os.environ["HF_TOKEN"]
+    )
+    # Chama o modelo para gerar a resposta
+    response = client.query(prompt)
+    return response['generated_text']
 
 def main():
     for alerta in sonar_alerts:
